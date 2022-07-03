@@ -180,6 +180,7 @@ MonoBehaviour:
   baseColour: {r: 0.64118904, g: 1, b: 0.48584908, a: 1}
   offsetColour: {r: 0.4472249, g: 0.6886792, b: 0.34109113, a: 1}
   spriteRenderer: {fileID: 930222438866966641}
+  slot: {fileID: 0}
   highlight: {fileID: 7538242421208480531}
 --- !u!61 &4727879210598549526
 BoxCollider2D:
@@ -191,7 +192,7 @@ BoxCollider2D:
   m_Enabled: 1
   m_Density: 1
   m_Material: {fileID: 0}
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
   m_Offset: {x: 0, y: 0}
@@ -205,5 +206,5 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 1, y: 1}
+  m_Size: {x: 0.9, y: 0.9}
   m_EdgeRadius: 0
