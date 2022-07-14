@@ -8,28 +8,29 @@ public class GridManager_Script : MonoBehaviour
     #region Tile Variables
     [SerializeField] private int width;
     [SerializeField] private int height;
-    [SerializeField] private int enemySpawned = 0, maxEnemies = 2;
     [SerializeField] private Tile_Script tilePrefab;
     private Dictionary<Vector2, Tile_Script> tiles;
-    private bool sceneInit = false;
+    #endregion
+
+    #region Enemy Variables
+    [SerializeField] private int enemySpawned = 0;
+    public int maxEnemies = 2;
+    [SerializeField] private GameObject enemyPrefab;
     #endregion
 
     [SerializeField] private Transform cam; // main camera
+    [SerializeField] private bool sceneInit = false;
     private const int zero = 0, two = 2;
 
     // Start is called before the first frame update
     void Start()
     {
-        //if (GameManager.gMan.roundNo % 5 == 0) // will move to a function later
-        //{
-        //    maxEnemies++;
-        //}
-        GenerateGrid();
+        GenerateGrid(); // creates the grid
     }
 
     void Update()
     {
-        if (!sceneInit)
+        if (!sceneInit) // spawns enemies on editor 'Play' button (will need to change later)
             SpawnEnemies();
 
         // Track a single touch as a direction control.
@@ -73,10 +74,12 @@ public class GridManager_Script : MonoBehaviour
 
     public void SpawnEnemies()
     {
-        if (enemySpawned == maxEnemies)
+        if (enemySpawned == maxEnemies) // this makes sure that this function only happens once on 'Play'
+        {
             sceneInit = true;
-
-        while (enemySpawned != maxEnemies) // loop continues until the enemy spawned count meets the max count
+        }
+            
+        while (enemySpawned != maxEnemies) // loop continues until the enemy spawned count meets the max enemy count
         {
             // Generate random numbers for enemy spawn
             int randomWidthNo = Random.Range(width/two, width); // enemy spawns only on the right side of the board
@@ -84,15 +87,30 @@ public class GridManager_Script : MonoBehaviour
 
             if (GetTileAtPosition(new Vector2(randomWidthNo, randomHeightNo)).GetComponent<Tile_Script>().isOccupied)
             {
-                Debug.LogWarning($"Enemy tried spawning on an already occupied tile (W:{randomWidthNo}, H:{randomHeightNo}). Finding new tile....");
+                Debug.LogWarning($"Enemy tried spawning on an already occupied tile (W:{randomWidthNo}, H:{randomHeightNo}). Finding new tile...."); // debug a warning if a enemy is attempting to spawn on an already occupied tile
                 return;
             }
 
             Debug.Log($"(W:{randomWidthNo}, H:{randomHeightNo})");
-            GetTileAtPosition(new Vector2(randomWidthNo, randomHeightNo)).spriteRenderer.color = Color.red;
-            GetTileAtPosition(new Vector2(randomWidthNo, randomHeightNo)).GetComponent<Tile_Script>().isOccupied = true;
-            enemySpawned++;
+            Instantiate(enemyPrefab, new Vector2(randomWidthNo, randomHeightNo), Quaternion.identity); // create enemy at tile position
+            GetTileAtPosition(new Vector2(randomWidthNo, randomHeightNo)).GetComponent<Tile_Script>().isOccupied = true; // that tile is now 'occupied'
+            enemySpawned++; // for every enemy spawn, plus one to this integer
         }
+    }
+
+    public void StartNewRound()
+    {
+        GameObject[] enemyArray = GameObject.FindGameObjectsWithTag("Enemy"); // create an array (*that's not-visable) that contains every enemy tagged with "Enemy"
+        // Clear Grid
+        foreach (GameObject item in enemyArray)
+        {
+            item.GetComponent<Enemy_Script>().occupiedTile.GetComponent<Tile_Script>().isOccupied = false; // get tile through the enemy and tile is no longer occupied
+            item.GetComponent<Enemy_Script>().occupiedTile.SetActive(true); // re-activated said tile in the scene
+            Destroy(item); // destroy the enemy
+        }
+        enemySpawned = 0; // "enemySpawned" is reset to 0
+        sceneInit = false;
+        SpawnEnemies(); // spawn the enemies again!
     }
 
     public Tile_Script GetTileAtPosition(Vector2 pos) // get specific tile to program tile logic
