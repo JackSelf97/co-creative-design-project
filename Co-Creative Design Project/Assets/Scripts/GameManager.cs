@@ -6,6 +6,7 @@ public class GameManager : MonoBehaviour
 {
     public GameObject interactableSlot = null;
     public GameObject activeTile = null;
+    public int roundNo = 0;
 
     #region Singleton & Awake
     public static GameManager gMan = null; // should always initilize
@@ -21,7 +22,7 @@ public class GameManager : MonoBehaviour
         {
             Destroy(gameObject); // if its already there destroy it
         }
-        Application.targetFrameRate = 144;
+        Application.targetFrameRate = 144; //framerate
     }
     #endregion
 

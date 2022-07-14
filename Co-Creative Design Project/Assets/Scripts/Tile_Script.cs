@@ -7,7 +7,7 @@ public class Tile_Script : MonoBehaviour
     #region Sprite Variables
     public Color baseColour, offsetColour;
     public SpriteRenderer spriteRenderer;
-
+    public bool isOccupied = false;
     [SerializeField] private GameObject highlight;
     #endregion
 

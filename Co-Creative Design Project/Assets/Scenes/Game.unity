@@ -150,8 +150,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5db04f10b72e00e43a67014c34e61d75, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  width: 6
-  height: 4
+  width: 14
+  height: 7
+  enemySpawned: 0
+  maxEnemies: 3
   tilePrefab: {fileID: 6912038262176684730, guid: 1457a294d4b9bc04f84d6ab0d52999ca,
     type: 3}
   cam: {fileID: 1498718309}
@@ -255,12 +257,12 @@ PrefabInstance:
     - target: {fileID: 5301500881641937361, guid: 0350efbf3e904e54986d1ac5d135dfc6,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: -5
+      value: -1.5
       objectReference: {fileID: 0}
     - target: {fileID: 5301500881641937361, guid: 0350efbf3e904e54986d1ac5d135dfc6,
         type: 3}
       propertyPath: m_LocalPosition.y
-      value: -2
+      value: -1.5
       objectReference: {fileID: 0}
     - target: {fileID: 5301500881641937361, guid: 0350efbf3e904e54986d1ac5d135dfc6,
         type: 3}
@@ -418,6 +420,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   interactableSlot: {fileID: 0}
   activeTile: {fileID: 0}
+  roundNo: 0
 --- !u!4 &1510688128
 Transform:
   m_ObjectHideFlags: 0
@@ -452,7 +455,7 @@ PrefabInstance:
     - target: {fileID: 5301500881641937361, guid: 0350efbf3e904e54986d1ac5d135dfc6,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: -5
+      value: -1.5
       objectReference: {fileID: 0}
     - target: {fileID: 5301500881641937361, guid: 0350efbf3e904e54986d1ac5d135dfc6,
         type: 3}

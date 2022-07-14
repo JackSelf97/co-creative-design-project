@@ -14,7 +14,6 @@ public class Interactable_Script : MonoBehaviour
         screenPoint = Camera.main.WorldToScreenPoint(gameObject.transform.position);
         offset = gameObject.transform.position - Camera.main.ScreenToWorldPoint(new Vector3(Input.mousePosition.x, Input.mousePosition.y, screenPoint.z));
 
-
         GetComponent<SpriteRenderer>().color = new Color32(120, 230, 255, 100); // changes the alpha
         GetComponent<CircleCollider2D>().enabled = false;
         GameManager.gMan.interactableSlot = gameObject;
