@@ -7,7 +7,20 @@ public class Interactable_Script : MonoBehaviour
     private Vector3 screenPoint;
     private Vector3 offset;
     [SerializeField] private GameObject occupiedTile = null;
-    private const int tileLayer = 8;
+    private const int playerLayer = 9;
+
+    //private void Update()
+    //{
+    //    // Track a single touch as a direction control.
+    //    if (Input.touchCount > 0 && Input.touches[0].phase == TouchPhase.Began)
+    //    {
+    //        RaycastHit2D hit = Physics2D.Raycast(Camera.main.ScreenToWorldPoint(Input.touches[0].position), Vector2.zero);
+    //        if (hit.rigidbody != null)
+    //        {
+
+    //        }
+    //    }
+    //}
 
     void OnMouseDown()
     {
@@ -19,6 +32,7 @@ public class Interactable_Script : MonoBehaviour
         GameManager.gMan.interactableSlot = gameObject;
         if (occupiedTile != null)
         {
+            occupiedTile.GetComponent<Tile_Script>().isOccupied = false;
             occupiedTile.GetComponent<Tile_Script>().gameObject.SetActive(true);
         }
     }
@@ -40,7 +54,7 @@ public class Interactable_Script : MonoBehaviour
 
     void OnTriggerEnter2D(Collider2D other)
     {
-        if (other.gameObject.layer == tileLayer)
+        if (GameManager.gMan.activeTile.gameObject.layer == playerLayer)
         {
             var activeTile = GameManager.gMan.activeTile;
             if (activeTile == null) { return; }
@@ -49,6 +63,7 @@ public class Interactable_Script : MonoBehaviour
             {
                 occupiedTile = activeTile.gameObject;
                 gameObject.transform.position = occupiedTile.transform.position - new Vector3(0, 0, 1); // placed in front of grid
+                occupiedTile.GetComponent<Tile_Script>().isOccupied = true; // enemies can track player placement
                 occupiedTile.GetComponent<Tile_Script>().gameObject.SetActive(false);
                 activeTile = null;
             }

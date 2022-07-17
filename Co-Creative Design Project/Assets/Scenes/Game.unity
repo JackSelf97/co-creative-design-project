@@ -152,14 +152,15 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   width: 14
   height: 7
-  enemySpawned: 0
-  maxEnemies: 3
   tilePrefab: {fileID: 6912038262176684730, guid: 1457a294d4b9bc04f84d6ab0d52999ca,
     type: 3}
+  tileList: []
+  enemySpawned: 0
+  maxEnemies: 3
   enemyPrefab: {fileID: 8160788746654434221, guid: 3494dc0f11c13ff468a5188658c6c6c2,
     type: 3}
-  sceneInit: 0
   cam: {fileID: 1498718309}
+  sceneInit: 0
 --- !u!4 &448809612
 Transform:
   m_ObjectHideFlags: 0
@@ -799,7 +800,7 @@ PrefabInstance:
     - target: {fileID: 5301500881641937361, guid: 0350efbf3e904e54986d1ac5d135dfc6,
         type: 3}
       propertyPath: m_LocalPosition.z
-      value: 1
+      value: -1
       objectReference: {fileID: 0}
     - target: {fileID: 5301500881641937361, guid: 0350efbf3e904e54986d1ac5d135dfc6,
         type: 3}
@@ -916,7 +917,7 @@ PrefabInstance:
     - target: {fileID: 5301500881641937361, guid: 0350efbf3e904e54986d1ac5d135dfc6,
         type: 3}
       propertyPath: m_LocalPosition.z
-      value: 1
+      value: -1
       objectReference: {fileID: 0}
     - target: {fileID: 5301500881641937361, guid: 0350efbf3e904e54986d1ac5d135dfc6,
         type: 3}
