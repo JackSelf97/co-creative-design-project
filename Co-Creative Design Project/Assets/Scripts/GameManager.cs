@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour
 {
@@ -38,6 +39,19 @@ public class GameManager : MonoBehaviour
         if (roundNo % 5 == 0) // every fifth round, a new enemy is spawned
         {
             gridMan.maxEnemies++;
+        }
+    }
+
+    public void SwitchScenes(string sceneName)
+    {
+        if (sceneName != "Quit")
+        {
+            SceneManager.LoadScene(sceneName);
+        }
+        else
+        {
+            Application.Quit();
+            Debug.Log("Quiting game...");
         }
     }
 }
