@@ -44,14 +44,13 @@ public class GameManager : MonoBehaviour
 
     public void SwitchScenes(string sceneName)
     {
-        if (sceneName != "Quit")
-        {
-            SceneManager.LoadScene(sceneName);
-        }
-        else
+        if (sceneName == "Quit")
         {
             Application.Quit();
             Debug.Log("Quiting game...");
+            return;
         }
+
+        SceneManager.LoadScene(sceneName);
     }
 }
