@@ -657,7 +657,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 8492360346591405821, guid: 9ed29f60f76896847b65fc878d88c317,
+      - m_Target: {fileID: 261236995255588448, guid: bc41d8783df7a9d41b810e516c98fba0,
           type: 3}
         m_MethodName: SwitchScenes
         m_Mode: 5
