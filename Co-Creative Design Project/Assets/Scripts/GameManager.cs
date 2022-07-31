@@ -41,16 +41,4 @@ public class GameManager : MonoBehaviour
             gridMan.maxEnemies++;
         }
     }
-
-    public void SwitchScenes(string sceneName)
-    {
-        if (sceneName == "Quit")
-        {
-            Application.Quit();
-            Debug.Log("Quiting game...");
-            return;
-        }
-
-        SceneManager.LoadScene(sceneName);
-    }
 }
