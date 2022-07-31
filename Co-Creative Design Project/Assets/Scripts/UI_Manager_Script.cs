@@ -1,5 +1,4 @@
 ﻿using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
@@ -10,6 +9,14 @@ public class UI_Manager_Script : MonoBehaviour
     public GameObject loadingScreen;
     public Slider loadingBar;
     public Text progressTxt;
+    [SerializeField] private float timer = 0, timeLimit = 0.01f;
+    [SerializeField] private bool load = false, fakeLoad = false;
+
+    private void Update()
+    {
+        if (load)
+            FakeGameLoad(); // this is restricted to the "Game" scene only
+    }
 
     public void SwitchScenes(string sceneName)
     {
@@ -20,7 +27,14 @@ public class UI_Manager_Script : MonoBehaviour
             return;
         }
 
-        StartCoroutine(LoadAsynchronously(sceneName));
+        if (!fakeLoad)
+        {
+            StartCoroutine(LoadAsynchronously(sceneName)); // remember to switch the boolean in the inspector to change real/fake load
+        }
+        else if (fakeLoad)
+        {
+            load = true;
+        }
     }
 
     IEnumerator LoadAsynchronously(string sceneName)
@@ -39,4 +53,19 @@ public class UI_Manager_Script : MonoBehaviour
         }
     }
 
+    void FakeGameLoad()
+    {
+        loadingScreen.SetActive(true);
+        timer += Time.deltaTime;
+        if (timer >= timeLimit)
+        {
+            loadingBar.value += .01f;
+            progressTxt.text = Mathf.Round(loadingBar.value * 100).ToString() + "%";
+            timer = 0;
+        }
+        if (loadingBar.value == 1)
+        {
+            SceneManager.LoadScene("Game");
+        }
+    }
 }
