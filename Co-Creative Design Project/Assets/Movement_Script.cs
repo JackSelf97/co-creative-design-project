@@ -16,7 +16,7 @@ public class Movement_Script : MonoBehaviour
     [SerializeField] float attackRange;
     [SerializeField] float distance;
     Vector3 moveDir;
-    // Start is called before the first frame update
+
     void Start()
     {
         //denotes tag attached to current gameObject
@@ -57,7 +57,6 @@ public class Movement_Script : MonoBehaviour
         }
         List<float> distances = targetDistances.Keys.ToList();
         targetDistance = distances.Min();
-        //store as target
         target = targetDistances[targetDistance];
         
     }
