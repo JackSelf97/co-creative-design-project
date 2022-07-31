@@ -5,17 +5,19 @@ using UnityEngine;
 
 public class Movement_Script : MonoBehaviour
 {
-    [SerializeField] GameObject[] opposingUnits;
-    Dictionary<float, GameObject> targetDistances = new Dictionary<float, GameObject>();
+    [SerializeField] float speed;
+    [SerializeField] float attackRange;
+    float targetDistance;
+    float distance;
     string unitTag;
     string playerTag = "Player";
     string enemyTag = "Enemy";
-    float targetDistance;
-    GameObject target;
-    [SerializeField] float speed;
-    [SerializeField] float attackRange;
-    [SerializeField] float distance;
     Vector3 moveDir;
+    GameObject target;
+    GameObject[] opposingUnits;
+    Dictionary<float, GameObject> targetDistances = new Dictionary<float, GameObject>();
+
+
 
     void Start()
     {
