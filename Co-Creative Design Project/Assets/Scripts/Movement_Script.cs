@@ -12,10 +12,12 @@ public class Movement_Script : MonoBehaviour
     string unitTag;
     string playerTag = "Player";
     string enemyTag = "Enemy";
+    bool canAttack = true;
     Vector3 moveDir;
     GameObject target;
     GameObject[] opposingUnits;
-    Dictionary<float, GameObject> targetDistances = new Dictionary<float, GameObject>();
+
+    
 
 
 
@@ -34,7 +36,11 @@ public class Movement_Script : MonoBehaviour
             distance = (target.transform.position - gameObject.transform.position).sqrMagnitude;
             if (distance <= attackRange)
             {
-                Debug.Log("Attack made!");
+                if (canAttack)
+                {
+                    StartCoroutine(AttackDelay());
+                    canAttack = false;
+                }
             }
 
             else
@@ -49,9 +55,18 @@ public class Movement_Script : MonoBehaviour
         }
     }
 
+    private IEnumerator AttackDelay()
+    {
+        yield return new WaitForSeconds(1f);
+        gameObject.GetComponent<Combat_Script>().DetermineAttack(target);
+        canAttack = true;
+
+
+    }
     //compare distance to find nearest unit and store as target
     private void DetermineTarget()
     {
+        Dictionary<float, GameObject> targetDistances = new Dictionary<float, GameObject>();
         foreach (GameObject opposingUnit in opposingUnits)
         {
             float distance = (gameObject.transform.position - opposingUnit.transform.position).sqrMagnitude;
@@ -74,6 +89,9 @@ public class Movement_Script : MonoBehaviour
         {
             opposingUnits = GameObject.FindGameObjectsWithTag(playerTag);
         }
-        DetermineTarget();
+        if (opposingUnits.Length != 0)
+        {
+            DetermineTarget();
+        }
     }
 }
