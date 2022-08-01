@@ -6,6 +6,7 @@ public class Combat_Script : MonoBehaviour
 {
     public enum UnitType { playerArcher, playerSpear, enemyMelee, enemyRanged};
     [SerializeField] UnitType unitType;
+    [SerializeField] GameObject projectile;
     [SerializeField] float damageValue = 3;
     public float healthValue = 10;
 
@@ -28,19 +29,30 @@ public class Combat_Script : MonoBehaviour
                 switch (unitType)
                 {
                     case UnitType.playerArcher:
-                        Debug.Log("Player Archer attack!");
+                        FireProjectile(target);
                         break;
                     case UnitType.playerSpear:
-                        target.GetComponent<Combat_Script>().healthValue -= damageValue;
+                        MeleeAttack(target);
                         break;
                     case UnitType.enemyMelee:
-                        target.GetComponent<Combat_Script>().healthValue -= damageValue;
+                        MeleeAttack(target);
                         break;
                     case UnitType.enemyRanged:
-                        Debug.Log("Enemy Ranged attack!");
+                        FireProjectile(target);
                         break;
                 }
             }
         }
+    }
+
+    private void FireProjectile(GameObject target)
+    {
+        projectile.GetComponent<Projectile_Script>().target = target;
+        Instantiate(projectile, this.gameObject.transform);
+    }
+
+    private void MeleeAttack(GameObject target)
+    {
+        target.GetComponent<Combat_Script>().healthValue -= damageValue;
     }
 }

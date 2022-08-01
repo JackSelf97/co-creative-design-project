@@ -7,6 +7,7 @@ public class Movement_Script : MonoBehaviour
 {
     [SerializeField] float speed;
     [SerializeField] float attackRange;
+    [SerializeField] float attackDelay = 1f;
     float targetDistance;
     float distance;
     string unitTag;
@@ -57,7 +58,7 @@ public class Movement_Script : MonoBehaviour
 
     private IEnumerator AttackDelay()
     {
-        yield return new WaitForSeconds(1f);
+        yield return new WaitForSeconds(attackDelay);
         gameObject.GetComponent<Combat_Script>().DetermineAttack(target);
         canAttack = true;
 
