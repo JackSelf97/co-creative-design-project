@@ -9,57 +9,68 @@ public class Interactable_Script : MonoBehaviour
     [SerializeField] private GameObject occupiedTile = null;
     private const int playerLayer = 9;
 
-
-    private void Update()
+    private void Start()
     {
-        //if (GameManager.gMan.roundStart) // prevents the unit from being interactable when the round starts
-        //    Destroy(this);
+        GameManager.gMan.playerList.Add(gameObject); // add player in playerList
+        GameManager.gMan.roundList.Add(gameObject);
     }
 
     void OnMouseDown()
     {
-        screenPoint = Camera.main.WorldToScreenPoint(gameObject.transform.position);
-        offset = gameObject.transform.position - Camera.main.ScreenToWorldPoint(new Vector3(Input.mousePosition.x, Input.mousePosition.y, screenPoint.z));
-
-        GetComponent<SpriteRenderer>().color = new Color32(120, 230, 255, 100); // changes the alpha
-        GetComponent<CircleCollider2D>().enabled = false;
-        GameManager.gMan.interactableSlot = gameObject;
-        if (occupiedTile != null)
+        if (!GetComponent<Movement_Script>().enabled) // replace check with 'roundInProgress' bool on GameManager
         {
-            occupiedTile.GetComponent<Tile_Script>().isOccupied = false;
-            occupiedTile.GetComponent<Tile_Script>().gameObject.SetActive(true);
+            screenPoint = Camera.main.WorldToScreenPoint(gameObject.transform.position);
+            offset = gameObject.transform.position - Camera.main.ScreenToWorldPoint(new Vector3(Input.mousePosition.x, Input.mousePosition.y, screenPoint.z));
+
+            GetComponent<SpriteRenderer>().color = new Color32(120, 230, 255, 100); // changes the alpha
+            GetComponent<CircleCollider2D>().enabled = false;
+            GameManager.gMan.interactableSlot = gameObject;
+            if (occupiedTile != null)
+            {
+                occupiedTile.GetComponent<Tile_Script>().isOccupied = false;
+                occupiedTile.GetComponent<Tile_Script>().gameObject.SetActive(true);
+            }
         }
     }
 
     void OnMouseUp()
     {
-        GetComponent<SpriteRenderer>().color = new Color32(120, 230, 255, 255); // changes the colour back to the original
-        GetComponent<CircleCollider2D>().enabled = true;
-        GameManager.gMan.interactableSlot = null;
-        occupiedTile = null;
+        if (!GetComponent<Movement_Script>().enabled)
+        {
+            GetComponent<SpriteRenderer>().color = new Color32(120, 230, 255, 255); // changes the colour back to the original
+            GetComponent<CircleCollider2D>().enabled = true;
+            GameManager.gMan.interactableSlot = null;
+            occupiedTile = null;
+        }
     }
 
     void OnMouseDrag()
     {
-        Vector3 curScreenPoint = new Vector3(Input.mousePosition.x, Input.mousePosition.y, screenPoint.z);
-        Vector3 curPosition = Camera.main.ScreenToWorldPoint(curScreenPoint) + offset;
-        transform.position = curPosition;
+        if (!GetComponent<Movement_Script>().enabled)
+        {
+            Vector3 curScreenPoint = new Vector3(Input.mousePosition.x, Input.mousePosition.y, screenPoint.z);
+            Vector3 curPosition = Camera.main.ScreenToWorldPoint(curScreenPoint) + offset;
+            transform.position = curPosition;
+        }
     }
 
     void OnTriggerEnter2D(Collider2D other)
     {
-        if (GameManager.gMan.activeTile.gameObject.layer == playerLayer)
+        if (!GetComponent<Movement_Script>().enabled)
         {
-            var activeTile = GameManager.gMan.activeTile;
-            if (activeTile == null) { return; }
-            
-            if (occupiedTile == null)
+            if (GameManager.gMan.activeTile.gameObject.layer == playerLayer)
             {
-                occupiedTile = activeTile.gameObject;
-                gameObject.transform.position = occupiedTile.transform.position - new Vector3(0, 0, 1); // placed in front of grid
-                occupiedTile.GetComponent<Tile_Script>().isOccupied = true; // enemies can track player placement
-                occupiedTile.GetComponent<Tile_Script>().gameObject.SetActive(false);
-                activeTile = null;
+                var activeTile = GameManager.gMan.activeTile;
+                if (activeTile == null) { return; }
+
+                if (occupiedTile == null)
+                {
+                    occupiedTile = activeTile.gameObject;
+                    gameObject.transform.position = occupiedTile.transform.position - new Vector3(0, 0, 1); // placed in front of grid
+                    occupiedTile.GetComponent<Tile_Script>().isOccupied = true; // enemies can track player placement
+                    occupiedTile.GetComponent<Tile_Script>().gameObject.SetActive(false);
+                    activeTile = null;
+                }
             }
         }
     }

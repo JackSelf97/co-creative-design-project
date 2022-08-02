@@ -101,6 +101,15 @@ public class GridManager_Script : MonoBehaviour
             GetTileAtPosition(new Vector2(randomWidthNo, randomHeightNo)).GetComponent<Tile_Script>().isOccupied = true; // that tile is now 'occupied'
             enemySpawned++; // for every enemy spawn, plus one to this integer
         }
+
+        // Stops enemies from moving
+        if (!GameManager.gMan.roundStart)
+        {
+            for (int i = 0; i < GameManager.gMan.roundList.Count; i++)
+            {
+                GameManager.gMan.roundList[i].GetComponent<Movement_Script>().enabled = false;
+            }
+        }
     }
 
     public void StartNewRound()

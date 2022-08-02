@@ -7,6 +7,12 @@ public class Enemy_Script : MonoBehaviour
     public GameObject occupiedTile = null;
     private const int tileLayer = 8;
 
+    private void Start()
+    {
+        GameManager.gMan.enemyList.Add(gameObject); // add enemy into enemyList
+        GameManager.gMan.roundList.Add(gameObject);
+    }
+
     void OnTriggerEnter2D(Collider2D other)
     {
         if (other.gameObject.layer == tileLayer)

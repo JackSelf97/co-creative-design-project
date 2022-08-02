@@ -11,8 +11,9 @@ public class GameManager : MonoBehaviour
     public Text roundTxt = null;
     public int roundNo = 0;
     public bool roundStart = false;
-    [SerializeField] private GameObject[] playerList, enemyList;
-
+    public List<GameObject> playerList = new List<GameObject>();
+    public List<GameObject> enemyList = new List<GameObject>();
+    public List<GameObject> roundList = new List<GameObject>();
     public GridManager_Script gridMan = null;
 
     #region Singleton & Awake
@@ -35,33 +36,13 @@ public class GameManager : MonoBehaviour
 
     private void Update()
     {
-        if (!roundStart) // This whole method is not efficient -- need to think of new approach
-        {
-            playerList = GameObject.FindGameObjectsWithTag("Player");
-            enemyList = GameObject.FindGameObjectsWithTag("Enemy");
-
-            for (int i = 0; i < playerList.Length; i++)
-            {
-                playerList[i].GetComponent<Movement_Script>().enabled = false;
-            }
-            for (int i = 0; i < enemyList.Length; i++)
-            {
-                enemyList[i].GetComponent<Movement_Script>().enabled = false;
-            }
-        }
         if (roundStart)
         {
-            playerList = GameObject.FindGameObjectsWithTag("Player");
-            enemyList = GameObject.FindGameObjectsWithTag("Enemy");
-
-            for (int i = 0; i < playerList.Length; i++)
+            for (int i = 0; i < roundList.Count; i++)
             {
-                playerList[i].GetComponent<Movement_Script>().enabled = true;
+                roundList[i].GetComponent<Movement_Script>().enabled = true;
             }
-            for (int i = 0; i < enemyList.Length; i++)
-            {
-                enemyList[i].GetComponent<Movement_Script>().enabled = true;
-            }
+            roundStart = false;
         }
     }
 
