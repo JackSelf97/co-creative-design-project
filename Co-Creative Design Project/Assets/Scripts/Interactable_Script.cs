@@ -9,18 +9,12 @@ public class Interactable_Script : MonoBehaviour
     [SerializeField] private GameObject occupiedTile = null;
     private const int playerLayer = 9;
 
-    //private void Update()
-    //{
-    //    // Track a single touch as a direction control.
-    //    if (Input.touchCount > 0 && Input.touches[0].phase == TouchPhase.Began)
-    //    {
-    //        RaycastHit2D hit = Physics2D.Raycast(Camera.main.ScreenToWorldPoint(Input.touches[0].position), Vector2.zero);
-    //        if (hit.rigidbody != null)
-    //        {
 
-    //        }
-    //    }
-    //}
+    private void Update()
+    {
+        //if (GameManager.gMan.roundStart) // prevents the unit from being interactable when the round starts
+        //    Destroy(this);
+    }
 
     void OnMouseDown()
     {

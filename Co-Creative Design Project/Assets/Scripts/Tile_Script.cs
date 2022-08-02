@@ -9,7 +9,33 @@ public class Tile_Script : MonoBehaviour
     public SpriteRenderer spriteRenderer;
     public bool isOccupied = false;
     [SerializeField] private GameObject highlight;
+    public bool shrink;
+    public float xScale, yScale;
     #endregion
+
+    public void Start()
+    {
+        xScale = 1f; // size of the objects
+        yScale = 1f;
+    }
+
+    public void Update()
+    {
+        if (shrink)
+        {
+            xScale -= Time.deltaTime;
+            yScale -= Time.deltaTime;
+            transform.localScale = new Vector3(xScale, yScale);
+
+            if (yScale <= 0f)
+            {
+                xScale = 0f;
+                yScale = 0f;
+
+                shrink = false;
+            }
+        }
+    }
 
     public void SetColour(bool isOffset)
     {

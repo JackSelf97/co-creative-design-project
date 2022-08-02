@@ -33,6 +33,16 @@ public class GridManager_Script : MonoBehaviour
     {
         if (!sceneInit) // spawns enemies on editor 'Play' button (will need to change later)
             SpawnEnemies();
+
+        if (GameManager.gMan.roundStart)
+        {
+            for (int i = 0; i < tileList.Count; i++)
+            {
+                tileList[i].GetComponent<BoxCollider2D>().enabled = false;
+                tileList[i].GetComponent<Tile_Script>().shrink = true;
+            }
+        }
+
     }
 
     public void GenerateGrid()

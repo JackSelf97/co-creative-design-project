@@ -10,7 +10,8 @@ public class UI_Manager_Script : MonoBehaviour
     public Slider loadingBar;
     public Text progressTxt;
     [SerializeField] private float timer = 0, timeLimit = 0.01f;
-    [SerializeField] private bool load = false, fakeLoad = false;
+    [SerializeField] private bool fakeLoad = false;
+    private bool load = false;
 
     private void Update()
     {

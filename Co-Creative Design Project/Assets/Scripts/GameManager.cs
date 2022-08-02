@@ -10,6 +10,8 @@ public class GameManager : MonoBehaviour
     public GameObject activeTile = null;
     public Text roundTxt = null;
     public int roundNo = 0;
+    public bool roundStart = false;
+    [SerializeField] private GameObject[] playerList, enemyList;
 
     public GridManager_Script gridMan = null;
 
@@ -31,6 +33,38 @@ public class GameManager : MonoBehaviour
     }
     #endregion
 
+    private void Update()
+    {
+        if (!roundStart) // This whole method is not efficient -- need to think of new approach
+        {
+            playerList = GameObject.FindGameObjectsWithTag("Player");
+            enemyList = GameObject.FindGameObjectsWithTag("Enemy");
+
+            for (int i = 0; i < playerList.Length; i++)
+            {
+                playerList[i].GetComponent<Movement_Script>().enabled = false;
+            }
+            for (int i = 0; i < enemyList.Length; i++)
+            {
+                enemyList[i].GetComponent<Movement_Script>().enabled = false;
+            }
+        }
+        if (roundStart)
+        {
+            playerList = GameObject.FindGameObjectsWithTag("Player");
+            enemyList = GameObject.FindGameObjectsWithTag("Enemy");
+
+            for (int i = 0; i < playerList.Length; i++)
+            {
+                playerList[i].GetComponent<Movement_Script>().enabled = true;
+            }
+            for (int i = 0; i < enemyList.Length; i++)
+            {
+                enemyList[i].GetComponent<Movement_Script>().enabled = true;
+            }
+        }
+    }
+
     public void AddRound(int roundNumber) // can be used to minus round
     {
         roundNo += roundNumber;
@@ -41,4 +75,10 @@ public class GameManager : MonoBehaviour
             gridMan.maxEnemies++;
         }
     }
+
+    public void StartRound()
+    {
+        roundStart = true;
+    }
+
 }
