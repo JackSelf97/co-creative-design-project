@@ -41,6 +41,7 @@ public class GridManager_Script : MonoBehaviour
                 tileList[i].GetComponent<BoxCollider2D>().enabled = false;
                 tileList[i].GetComponent<Tile_Script>().shrink = true;
             }
+            
         }
 
     }

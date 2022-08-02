@@ -10,7 +10,7 @@ public class GameManager : MonoBehaviour
     public GameObject activeTile = null;
     public Text roundTxt = null;
     public int roundNo = 0;
-    public bool roundStart = false;
+    public bool roundStart = false, roundInProgress = false;
     public List<GameObject> playerList = new List<GameObject>();
     public List<GameObject> enemyList = new List<GameObject>();
     public List<GameObject> roundList = new List<GameObject>();
@@ -43,6 +43,17 @@ public class GameManager : MonoBehaviour
                 roundList[i].GetComponent<Movement_Script>().enabled = true;
             }
             roundStart = false;
+            roundInProgress = true;
+        }
+        if (enemyList.Count == 0 && roundInProgress)
+        {
+            Debug.Log("Player units have won the round!");
+            roundInProgress = false;
+        }
+        if (playerList.Count == 0 && roundInProgress)
+        {
+            Debug.Log("Enemy units have won the round!");
+            roundInProgress = false;
         }
     }
 

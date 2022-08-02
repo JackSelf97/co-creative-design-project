@@ -14,6 +14,7 @@ public class Combat_Script : MonoBehaviour
     {
         if (healthValue <= 0)
         {
+            GameManager.gMan.enemyList.Remove(gameObject); // remove enemy from list
             Destroy(gameObject);
         }
     }

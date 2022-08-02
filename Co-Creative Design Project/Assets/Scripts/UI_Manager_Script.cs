@@ -41,16 +41,18 @@ public class UI_Manager_Script : MonoBehaviour
     IEnumerator LoadAsynchronously(string sceneName)
     {
         AsyncOperation operation = SceneManager.LoadSceneAsync(sceneName); // store the status
-        loadingScreen.SetActive(true);
-        while (!operation.isDone)
+        if (SceneManager.GetActiveScene().name == "Main Menu")
         {
+            loadingScreen.SetActive(true);
+            while (!operation.isDone)
+            {
+                float progress = Mathf.Clamp01(operation.progress / .9f);
+                Debug.Log(progress);
+                loadingBar.value = progress;
+                progressTxt.text = progress * 100f + "%";
 
-            float progress = Mathf.Clamp01(operation.progress / .9f);
-            Debug.Log(progress);
-            loadingBar.value = progress;
-            progressTxt.text = progress * 100f + "%";
-
-            yield return null; // wait a frame
+                yield return null; // wait a frame
+            }
         }
     }
 

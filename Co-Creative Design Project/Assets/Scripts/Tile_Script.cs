@@ -31,7 +31,7 @@ public class Tile_Script : MonoBehaviour
             {
                 xScale = 0f;
                 yScale = 0f;
-
+                gameObject.SetActive(false);
                 shrink = false;
             }
         }

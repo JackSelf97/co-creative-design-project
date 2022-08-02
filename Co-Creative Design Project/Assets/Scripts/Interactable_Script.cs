@@ -17,7 +17,7 @@ public class Interactable_Script : MonoBehaviour
 
     void OnMouseDown()
     {
-        if (!GetComponent<Movement_Script>().enabled) // replace check with 'roundInProgress' bool on GameManager
+        if (!GameManager.gMan.roundInProgress) // replace check with 'roundInProgress' bool on GameManager
         {
             screenPoint = Camera.main.WorldToScreenPoint(gameObject.transform.position);
             offset = gameObject.transform.position - Camera.main.ScreenToWorldPoint(new Vector3(Input.mousePosition.x, Input.mousePosition.y, screenPoint.z));
@@ -35,7 +35,7 @@ public class Interactable_Script : MonoBehaviour
 
     void OnMouseUp()
     {
-        if (!GetComponent<Movement_Script>().enabled)
+        if (!GameManager.gMan.roundInProgress)
         {
             GetComponent<SpriteRenderer>().color = new Color32(120, 230, 255, 255); // changes the colour back to the original
             GetComponent<CircleCollider2D>().enabled = true;
@@ -46,7 +46,7 @@ public class Interactable_Script : MonoBehaviour
 
     void OnMouseDrag()
     {
-        if (!GetComponent<Movement_Script>().enabled)
+        if (!GameManager.gMan.roundInProgress)
         {
             Vector3 curScreenPoint = new Vector3(Input.mousePosition.x, Input.mousePosition.y, screenPoint.z);
             Vector3 curPosition = Camera.main.ScreenToWorldPoint(curScreenPoint) + offset;
@@ -56,7 +56,7 @@ public class Interactable_Script : MonoBehaviour
 
     void OnTriggerEnter2D(Collider2D other)
     {
-        if (!GetComponent<Movement_Script>().enabled)
+        if (!GameManager.gMan.roundInProgress)
         {
             if (GameManager.gMan.activeTile.gameObject.layer == playerLayer)
             {
