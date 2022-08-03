@@ -9,6 +9,7 @@ public class Movement_Script : MonoBehaviour
     [SerializeField] float attackRange;
     [SerializeField] float attackDelay = 1f;
     [SerializeField] bool isHealer = false;
+    [SerializeField] bool isDaggerUnit = false;
     float targetDistance;
     float distance;
     string unitTag;
@@ -34,7 +35,7 @@ public class Movement_Script : MonoBehaviour
     {
         if (target != null)
         {
-
+            //if the target unit is in range, trigger the attack
             distance = (target.transform.position - gameObject.transform.position).sqrMagnitude;
             if (distance <= attackRange)
             {
@@ -59,9 +60,37 @@ public class Movement_Script : MonoBehaviour
 
             else
             {
-                moveDir = (target.transform.position - gameObject.transform.position);
-                transform.Translate(moveDir * speed * Time.deltaTime);
+                //if unit is a dagger unit, use teleport ability
+                if (isDaggerUnit)
+                {
+                    if (GetComponent<Combat_Script>().canTeleport)
+                    {
+                        StartCoroutine(TeleportDelay());
+                    }
+                    else
+                    {
+                        //move towards target unit
+                        moveDir = (target.transform.position - gameObject.transform.position);
+                        transform.Translate(moveDir * speed * Time.deltaTime);
+                    }
+                }
+                else
+                {
+                    //move towards target unit
+                    moveDir = (target.transform.position - gameObject.transform.position);
+                    transform.Translate(moveDir * speed * Time.deltaTime);
+                }
             }
+            //make unit face backwards if the target is behind it
+
+                if (target.transform.position.x < gameObject.transform.position.x)
+                {
+                    GetComponent<SpriteRenderer>().flipX = true;
+                }
+                else
+                {
+                    GetComponent<SpriteRenderer>().flipX = false;
+                }
         }
         else
         {
@@ -74,9 +103,14 @@ public class Movement_Script : MonoBehaviour
         yield return new WaitForSeconds(attackDelay);
         gameObject.GetComponent<Combat_Script>().DetermineAttack(target);
         canAttack = true;
-
-
     }
+
+    private IEnumerator TeleportDelay()
+    {
+        yield return new WaitForSeconds(attackDelay);
+        GetComponent<Combat_Script>().Teleport(target);
+    }
+
     //compare distance to find nearest unit and store as target
     private void DetermineTarget()
     {
@@ -88,7 +122,7 @@ public class Movement_Script : MonoBehaviour
         }
         List<float> distances = targetDistances.Keys.ToList();
         //if unit is a healer, get the furthest possible target
-        if (isHealer)
+        if (isHealer || isDaggerUnit)
         {
             targetDistance = distances.Max();
         }
@@ -120,6 +154,11 @@ public class Movement_Script : MonoBehaviour
             //find objects with opposite tag
             if (unitTag == playerTag)
             {
+                //if the unit is a dagger unit, enable their teleport when selecting a target
+                if (isDaggerUnit)
+                {
+                    GetComponent<Combat_Script>().canTeleport = true;
+                }
                 potentialTargets = GameObject.FindGameObjectsWithTag(enemyTag);
             }
             else if (unitTag == enemyTag)

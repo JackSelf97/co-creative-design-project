@@ -5,12 +5,13 @@ using UnityEngine;
 
 public class Combat_Script : MonoBehaviour
 {
-    public enum UnitType { playerArcher, playerSpear, enemyMelee, enemyRanged, enemyHealer};
+    public enum UnitType { playerArcher, playerSpear, playerDagger, enemyMelee, enemyRanged, enemyHealer};
     [SerializeField] UnitType unitType;
     [SerializeField] GameObject projectile;
     [SerializeField] float damageValue = 3;
     public float healthValue = 10;
     public float maxHealth;
+    public bool canTeleport = false;
 
     private void Start()
     {
@@ -51,6 +52,9 @@ public class Combat_Script : MonoBehaviour
                     case UnitType.enemyHealer:
                         HealUnit(target);
                         break;
+                    case UnitType.playerDagger:
+                        MeleeAttack(target);
+                        break;
                 }
             }
         }
@@ -71,5 +75,15 @@ public class Combat_Script : MonoBehaviour
     private void MeleeAttack(GameObject target)
     {
         target.GetComponent<Combat_Script>().healthValue -= damageValue;
+    }
+
+    public void Teleport(GameObject target)
+    {
+        if (target != null)
+        {
+            Vector3 offset = new Vector3(1, 0, 0);
+            gameObject.transform.position = target.transform.position + offset;
+            canTeleport = false;
+        }
     }
 }
