@@ -149,8 +149,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   speed: 1
-  attackRange: 500
+  attackRange: 100
   attackDelay: 2
+  isHealer: 0
 --- !u!114 &4539107930146133036
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -168,3 +169,4 @@ MonoBehaviour:
     type: 3}
   damageValue: 1
   healthValue: 6
+  maxHealth: 0

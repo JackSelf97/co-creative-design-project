@@ -1,14 +1,21 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 public class Combat_Script : MonoBehaviour
 {
-    public enum UnitType { playerArcher, playerSpear, enemyMelee, enemyRanged};
+    public enum UnitType { playerArcher, playerSpear, enemyMelee, enemyRanged, enemyHealer};
     [SerializeField] UnitType unitType;
     [SerializeField] GameObject projectile;
     [SerializeField] float damageValue = 3;
     public float healthValue = 10;
+    public float maxHealth;
+
+    private void Start()
+    {
+        maxHealth = healthValue;
+    }
 
     private void Update()
     {
@@ -41,9 +48,18 @@ public class Combat_Script : MonoBehaviour
                     case UnitType.enemyRanged:
                         FireProjectile(target);
                         break;
+                    case UnitType.enemyHealer:
+                        HealUnit(target);
+                        break;
                 }
             }
         }
+    }
+
+    private void HealUnit(GameObject target)
+    {
+            target.GetComponent<Combat_Script>().healthValue += damageValue;
+            Debug.Log("Enemy Healed");
     }
 
     private void FireProjectile(GameObject target)

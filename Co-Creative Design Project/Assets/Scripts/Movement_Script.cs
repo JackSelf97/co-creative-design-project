@@ -8,6 +8,7 @@ public class Movement_Script : MonoBehaviour
     [SerializeField] float speed;
     [SerializeField] float attackRange;
     [SerializeField] float attackDelay = 1f;
+    [SerializeField] bool isHealer = false;
     float targetDistance;
     float distance;
     string unitTag;
@@ -16,7 +17,7 @@ public class Movement_Script : MonoBehaviour
     bool canAttack = true;
     Vector3 moveDir;
     GameObject target;
-    GameObject[] opposingUnits;
+    GameObject[] potentialTargets;
 
     
 
@@ -39,8 +40,20 @@ public class Movement_Script : MonoBehaviour
             {
                 if (canAttack)
                 {
-                    StartCoroutine(AttackDelay());
-                    canAttack = false;
+                    //if the unit is a healer, only heal units if they are below their maximum health
+                    if (isHealer)
+                    {
+                        if (target.GetComponent<Combat_Script>().healthValue < target.GetComponent<Combat_Script>().maxHealth)
+                        {
+                            StartCoroutine(AttackDelay());
+                            canAttack = false;
+                        }
+                    }
+                    else
+                    {
+                        StartCoroutine(AttackDelay());
+                        canAttack = false;
+                    }
                 }
             }
 
@@ -68,29 +81,53 @@ public class Movement_Script : MonoBehaviour
     private void DetermineTarget()
     {
         Dictionary<float, GameObject> targetDistances = new Dictionary<float, GameObject>();
-        foreach (GameObject opposingUnit in opposingUnits)
+        foreach (GameObject opposingUnit in potentialTargets)
         {
             float distance = (gameObject.transform.position - opposingUnit.transform.position).sqrMagnitude;
             targetDistances.Add(distance, opposingUnit);
         }
         List<float> distances = targetDistances.Keys.ToList();
-        targetDistance = distances.Min();
+        //if unit is a healer, get the furthest possible target
+        if (isHealer)
+        {
+            targetDistance = distances.Max();
+        }
+        else
+        {
+            targetDistance = distances.Min();
+        }
         target = targetDistances[targetDistance];
         
     }
 
-    //find objects with opposite tag
+
     private void GetPossibleTargets()
     {
-        if (unitTag == playerTag)
+        //if unit is a healer, find objects with the same tag
+        if (isHealer)
         {
-            opposingUnits = GameObject.FindGameObjectsWithTag(enemyTag);
+            if (unitTag == playerTag)
+            {
+                potentialTargets = GameObject.FindGameObjectsWithTag(playerTag);
+            }
+            else if (unitTag == enemyTag)
+            {
+                potentialTargets = GameObject.FindGameObjectsWithTag(enemyTag);
+            }
         }
-        else if (unitTag == enemyTag)
+        else
         {
-            opposingUnits = GameObject.FindGameObjectsWithTag(playerTag);
+            //find objects with opposite tag
+            if (unitTag == playerTag)
+            {
+                potentialTargets = GameObject.FindGameObjectsWithTag(enemyTag);
+            }
+            else if (unitTag == enemyTag)
+            {
+                potentialTargets = GameObject.FindGameObjectsWithTag(playerTag);
+            }
         }
-        if (opposingUnits.Length != 0)
+        if (potentialTargets.Length != 0)
         {
             DetermineTarget();
         }
