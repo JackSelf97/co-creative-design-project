@@ -9,13 +9,18 @@ public class Combat_Script : MonoBehaviour
     [SerializeField] UnitType unitType;
     [SerializeField] GameObject projectile;
     [SerializeField] float damageValue = 3;
+    private ParticleSystem deathParticle;
+    public ParticleSystem damageParticle;
     public float healthValue = 10;
     public float maxHealth;
     public bool canTeleport = false;
+   
 
     private void Start()
     {
         maxHealth = healthValue;
+        deathParticle = this.transform.Find("Dust_Particles").GetComponent<ParticleSystem>();
+        damageParticle = this.transform.Find("Boom_Particle").GetComponent<ParticleSystem>();
     }
 
     private void Update()
@@ -23,7 +28,12 @@ public class Combat_Script : MonoBehaviour
         if (healthValue <= 0)
         {
             GameManager.gMan.enemyList.Remove(gameObject); // remove enemy from list
-            Destroy(gameObject);
+            //play death particles. Destroy unit after a short delay;
+            if (!deathParticle.isPlaying)
+            {
+                deathParticle.Play();
+            }
+            StartCoroutine(UnitDeath());
         }
     }
 
@@ -74,6 +84,7 @@ public class Combat_Script : MonoBehaviour
 
     private void MeleeAttack(GameObject target)
     {
+        target.GetComponent<Combat_Script>().damageParticle.Play();
         target.GetComponent<Combat_Script>().healthValue -= damageValue;
     }
 
@@ -85,5 +96,11 @@ public class Combat_Script : MonoBehaviour
             gameObject.transform.position = target.transform.position + offset;
             canTeleport = false;
         }
+    }
+
+    IEnumerator UnitDeath()
+    {
+        yield return new WaitForSeconds(1f);
+        Destroy(gameObject);
     }
 }

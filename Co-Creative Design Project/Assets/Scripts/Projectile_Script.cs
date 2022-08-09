@@ -25,6 +25,7 @@ public class Projectile_Script : MonoBehaviour
     {
         if (collision.gameObject == target)
         {
+            collision.GetComponent<Combat_Script>().damageParticle.Play();
             collision.GetComponent<Combat_Script>().healthValue -= damageValue;
             Destroy(gameObject);
         }

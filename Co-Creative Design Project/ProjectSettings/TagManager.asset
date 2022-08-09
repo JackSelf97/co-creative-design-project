@@ -42,3 +42,6 @@ TagManager:
   - name: Default
     uniqueID: 0
     locked: 0
+  - name: Top Effects
+    uniqueID: 2410999179
+    locked: 0

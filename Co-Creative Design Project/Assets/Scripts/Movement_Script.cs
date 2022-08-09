@@ -10,6 +10,7 @@ public class Movement_Script : MonoBehaviour
     [SerializeField] float attackDelay = 1f;
     [SerializeField] bool isHealer = false;
     [SerializeField] bool isDaggerUnit = false;
+    private ParticleSystem assassinParticles;
     float targetDistance;
     float distance;
     string unitTag;
@@ -29,6 +30,10 @@ public class Movement_Script : MonoBehaviour
         //denotes tag attached to current gameObject
         unitTag = gameObject.tag;
         GetPossibleTargets();
+        if(isDaggerUnit)
+        {
+            assassinParticles = this.transform.Find("Assassin_Particles").GetComponent<ParticleSystem>();
+        }
     }
 
     private void Update()
@@ -65,6 +70,10 @@ public class Movement_Script : MonoBehaviour
                 {
                     if (GetComponent<Combat_Script>().canTeleport)
                     {
+                        if (!assassinParticles.isPlaying)
+                        {
+                            assassinParticles.Play();
+                        }
                         StartCoroutine(TeleportDelay());
                     }
                     else
