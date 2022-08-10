@@ -8,6 +8,7 @@ public class GameManager : MonoBehaviour
 {
     public GameObject interactableSlot = null;
     public GameObject activeTile = null;
+    public GameObject buttons = null;
     public Text roundTxt = null;
     public int roundNo = 0;
     public bool roundStart = false, roundInProgress = false;
@@ -72,6 +73,7 @@ public class GameManager : MonoBehaviour
 
     public void StartRound()
     {
+        buttons.SetActive(false);
         roundStart = true;
     }
 
