@@ -15,12 +15,15 @@ public class Enemy_Script : MonoBehaviour
 
     void OnTriggerEnter2D(Collider2D other)
     {
-        if (other.gameObject.layer == tileLayer)
+        if (!GameManager.gMan.roundInProgress)
         {
-            if (occupiedTile == null)
+            if (other.gameObject.layer == tileLayer)
             {
-                occupiedTile = other.gameObject;
-                occupiedTile.GetComponent<Tile_Script>().gameObject.SetActive(false);
+                if (occupiedTile == null)
+                {
+                    occupiedTile = other.gameObject;
+                    //occupiedTile.GetComponent<Tile_Script>().gameObject.SetActive(false);
+                }
             }
         }
     }

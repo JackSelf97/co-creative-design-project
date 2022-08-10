@@ -61,6 +61,8 @@ public class GameManager : MonoBehaviour
     {
         roundNo += roundNumber;
         roundTxt.text = "Round: " + roundNo;
+        enemyList.Clear();
+        roundList.Clear();
         gridMan.StartNewRound();
         if (roundNo % 5 == 0) // every fifth round, a new enemy is spawned
         {

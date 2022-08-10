@@ -178,11 +178,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f2b16fd07c43156408f527580a077042, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  baseColour: {r: 0.8490566, g: 0.70809174, b: 0.42052332, a: 0.5882353}
-  offsetColour: {r: 0.42745098, g: 0.32941177, b: 0.12941177, a: 0.5882353}
+  baseColour: {r: 0.8490566, g: 0.70809174, b: 0.42052332, a: 0.8627451}
+  offsetColour: {r: 0.42745098, g: 0.32941177, b: 0.12941177, a: 0.8627451}
   spriteRenderer: {fileID: 930222438866966641}
   isOccupied: 0
   highlight: {fileID: 7538242421208480531}
+  shrink: 0
+  xScale: 0
+  yScale: 0
 --- !u!61 &4727879210598549526
 BoxCollider2D:
   m_ObjectHideFlags: 0

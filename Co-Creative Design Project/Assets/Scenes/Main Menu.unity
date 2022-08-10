@@ -1058,7 +1058,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Navigation:
-    m_Mode: 3
+    m_Mode: 0
     m_SelectOnUp: {fileID: 0}
     m_SelectOnDown: {fileID: 0}
     m_SelectOnLeft: {fileID: 0}
@@ -1797,7 +1797,7 @@ PrefabInstance:
     - target: {fileID: 261236995255588448, guid: bc41d8783df7a9d41b810e516c98fba0,
         type: 3}
       propertyPath: fakeLoad
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 261236995255588448, guid: bc41d8783df7a9d41b810e516c98fba0,
         type: 3}

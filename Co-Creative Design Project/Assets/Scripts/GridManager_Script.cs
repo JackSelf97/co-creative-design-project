@@ -16,7 +16,7 @@ public class GridManager_Script : MonoBehaviour
     #region Enemy Variables
     [SerializeField] private int enemySpawned = 0;
     public int maxEnemies = 2;
-    [SerializeField] private GameObject enemyPrefab;
+    [SerializeField] private GameObject[] enemyPrefab;
     #endregion
 
     [SerializeField] private Transform cam; // main camera
@@ -97,8 +97,9 @@ public class GridManager_Script : MonoBehaviour
                 return;
             }
 
+            int randomUnit = Random.Range(0, 3);
             Debug.Log($"(W:{randomWidthNo}, H:{randomHeightNo})");
-            Instantiate(enemyPrefab, new Vector2(randomWidthNo, randomHeightNo), Quaternion.identity); // create enemy at tile position
+            Instantiate(enemyPrefab[randomUnit], new Vector2(randomWidthNo, randomHeightNo), Quaternion.identity); // create enemy at tile position
             GetTileAtPosition(new Vector2(randomWidthNo, randomHeightNo)).GetComponent<Tile_Script>().isOccupied = true; // that tile is now 'occupied'
             enemySpawned++; // for every enemy spawn, plus one to this integer
         }
