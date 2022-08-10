@@ -15,6 +15,7 @@ GameObject:
   - component: {fileID: 8861244508388656807}
   - component: {fileID: 8609951613961313030}
   - component: {fileID: 3712309160509845298}
+  - component: {fileID: 847006313}
   m_Layer: 0
   m_Name: Enemy_Melee
   m_TagString: Enemy
@@ -170,10 +171,30 @@ MonoBehaviour:
   unitType: 3
   projectile: {fileID: 0}
   damageValue: 1
+  animator: {fileID: 0}
   damageParticle: {fileID: 0}
   healthValue: 6
   maxHealth: 0
   canTeleport: 0
+--- !u!95 &847006313
+Animator:
+  serializedVersion: 3
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 449308009175393960}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 1ebd19aaa53571749b800620c9ad0b45, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorControllerStateOnDisable: 0
 --- !u!1001 &4457758738863335381
 PrefabInstance:
   m_ObjectHideFlags: 0

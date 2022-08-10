@@ -15,6 +15,7 @@ GameObject:
   - component: {fileID: 8611891778061729209}
   - component: {fileID: 8792806030828232728}
   - component: {fileID: 4539107930146133036}
+  - component: {fileID: 406959212}
   m_Layer: 0
   m_Name: Enemy_Ranged
   m_TagString: Enemy
@@ -171,10 +172,30 @@ MonoBehaviour:
   projectile: {fileID: 4750391654743565828, guid: fccdd5b9e4455614ab1a6973d91693d5,
     type: 3}
   damageValue: 1
+  animator: {fileID: 0}
   damageParticle: {fileID: 0}
   healthValue: 6
   maxHealth: 0
   canTeleport: 0
+--- !u!95 &406959212
+Animator:
+  serializedVersion: 3
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 812513113956539830}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: b90c1cc5290ff9a4fa61f586dc2a282e, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorControllerStateOnDisable: 0
 --- !u!1001 &112274043088489231
 PrefabInstance:
   m_ObjectHideFlags: 0

@@ -15,6 +15,7 @@ GameObject:
   - component: {fileID: 5037047918828210600}
   - component: {fileID: 5216003908806398985}
   - component: {fileID: 908182346067173437}
+  - component: {fileID: 820366680}
   m_Layer: 0
   m_Name: Enemy_Healer
   m_TagString: Enemy
@@ -171,10 +172,30 @@ MonoBehaviour:
   projectile: {fileID: 1010850939963502375, guid: de44d7e8767278941883be508e45fbc8,
     type: 3}
   damageValue: 2
+  animator: {fileID: 0}
   damageParticle: {fileID: 0}
   healthValue: 8
   maxHealth: 0
   canTeleport: 0
+--- !u!95 &820366680
+Animator:
+  serializedVersion: 3
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4116859380981328295}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: c26a48014848df04a97df89e59f25588, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorControllerStateOnDisable: 0
 --- !u!1001 &2532692598894857411
 PrefabInstance:
   m_ObjectHideFlags: 0
